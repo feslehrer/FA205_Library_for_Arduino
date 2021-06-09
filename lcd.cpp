@@ -266,10 +266,19 @@ void lcd_char (uint8_t zeichen)
 /*****************************************************************************************
  * \0-terminierten Text an das LCD-Display ausgeben. 
  ******************************************************************************************/
-void lcd_print (uint8_t text[])
-{				
-  while (*text != '\0')                   // Text													
-    lcd_char (*text++);                   // zeichenweise ausgeben 	
+void lcd_print (uint8_t *text)
+{
+  while (*text != '\0')             // Text													
+  {
+    if ((*text & 0xe0) == 0xe0)   // 3-Byte UTF8 ?
+    {
+      *text++;
+      if ((*text & 0x80) == 0x80)  *text++;
+    }          
+    if ((*text & 0xc0) != 0xc0)   // 2-Byte UTF8 ?
+      lcd_char (*text);             // nein, dann zeichenweise ausgeben 	
+    *text++;                        // Pointer inkrementieren
+  }
 }
 
 /*============================================================
@@ -341,17 +350,20 @@ uint8_t lcd_lookup(uint8_t ascii)
 {
   switch (ascii)
   {
-    case 0xb0: return 0xdf;  // 0xb0 = '°'
-    case 'ä':  return 0xe1;
-    case 'ö':  return 0xef;
-    case 'ü':  return 0xf5;
-    case 'Ä':  return 0xe1;
-    case 'Ö':  return 0xef;
-    case 'Ü':  return 0xf5;
-    case 'ß':  return 0xe2;
-    case 'µ':  return 0xe4;
+    case 0xb0: return 0xdf;   // '°'
+    case 0xa4: 
+    case 0x84: return 0xe1;   //ä,Ä
+    
+    case 0xb6:  
+    case 0x96: return 0xef;   //ö,Ö
+    
+    case 0xbc:  
+    case 0x9c: return 0xf5;   //ü,Ü
+    
+    case 0x9f: return 0xe2;   // 'ß'
+    case 0xb5: return 0xe4;   // 'µ'
     case '\\': return 0xa4;
-    case '€':  return 0xd3;
+    case 0xac: return 0xd3;   // '€'
   }
   return ascii;
 }

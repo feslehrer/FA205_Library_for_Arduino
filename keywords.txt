@@ -6,11 +6,11 @@
 #######################################
 # Library (KEYWORD3)
 #######################################
-controller  KEYWORD3
-delay		KEYWORD3
-in_out		KEYWORD3
+controller KEYWORD3
+delay	KEYWORD3
+in_out	KEYWORD3
 interrupt	KEYWORD3
-lcd		KEYWORD3
+lcd	KEYWORD3
 communication	KEYWORD3
 
 #######################################

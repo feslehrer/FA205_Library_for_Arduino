@@ -4,7 +4,7 @@
 //     Verwendet externen Interrupt 0 und Timer 0
 // Version:          2.0
 // erstellt am:      13.07.2015
-// letzte Änderung:  16.8.2018
+// letzte ï¿½nderung:  16.8.2018
 // Autor:            Rahm
 
 #include "interrupt.h"
@@ -172,14 +172,14 @@ void timer_ms_init ( void (*ti) (void), float time)
   my_timer = ti;					         // Pointer auf isr im User-Code (normalerweise: timer_ms_isr) !!
    
   TCCR0A |= (1 << WGM01);          // Timer Mode: CTC   (Autoreload-Modus)
-  OCR0A = preload_calc(time);      // Bei welchem Zählwert soll der Interrupt kommen
+  OCR0A = preload_calc(time);      // Bei welchem Zï¿½hlwert soll der Interrupt kommen
 }
 
 uint8_t preload_calc ( float time)
 { // time in ms
   uint8_t preload;
   
-  if      (time < 0.015937) prescaler = 1;         // tmax = 15,937µs
+  if      (time < 0.015937) prescaler = 1;         // tmax = 15,937ï¿½s
   else if (time < 0.1275  ) prescaler = 8;
   else if (time < 1.02    ) prescaler = 64;
   else if (time < 4.08    ) prescaler = 256;
@@ -240,28 +240,30 @@ extern void serial_interrupt_disable ( void )
 //  
 // Soundausgabe auf Lautsprecher an Port B.3
 // 
-#ifndef TON_PORT
-  #define TON_PORT _PORTB_
+// Problem: TonhÃ¶he nicht variabel. In ATmelStudio funktioniert alles. 
+//  Evtl.: timer_ms verwendet Timer0. Dieser wird auch von der Arduino-Funktion millis() verwendet.
+//         LÃ¶sung z.B. timer1 verwenden? ist aber 8 Bit??
+//            !!! not yet implemented !!!
+#ifndef TON_PIN
+  #define TON_PIN _PORTB_,3
 #endif
-#ifndef TON_BIT
-  #define TON_BIT 3
-#endif
+
 
 void sound_init(void)
 {
-    bit_init(TON_PORT,TON_BIT,OUT);
+    bit_init(TON_PIN,OUT);
 }
 
 void note_isr( void )
 {  
-  bit_write(TON_PORT,TON_BIT,~bit_read(TON_PORT,TON_BIT));
+  bit_write(TON_PIN,~bit_read(TON_PIN));
 }
 
 void note_on(float frequenz)
 {
   float millisec;
   
-  millisec = 500/frequenz;    // Zeit für Halbe Periodendauer in ms
+  millisec = 500/frequenz;    // Zeit fï¿½r Halbe Periodendauer in ms
   
   timer_ms_init(note_isr, millisec);
   timer_ms_enable();

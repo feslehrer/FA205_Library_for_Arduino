@@ -4,8 +4,7 @@ Bibliotheken für die C-Programmierung für Unterricht und Prüfung im Beruf Ele
 
 Die Datei "ReadmeFirst.docx" enthält Hinweise für die Installation der Bibliotheken in der Arduino-IDE.
 
-Warnung: Die Bibliotheken sind nur für ArduinoUno und Nano mit ATmega328P-Controller geeignet, da sie nichtb auf die Arduino Funktionen
-aufsetzen, sondern hardwarenahe programmiert sind. Das mischen von Richtlinien- und Arduino-Funktionen wird meistens trotzdem funktionieren,
-kann aber nicht in jedem Fall garantiert werden.
+Warnung: Die Bibliotheken sind nur für ArduinoUno und Nano mit ATmega328P-Controller geeignet, da sie nicht auf die Arduino Funktionen
+aufsetzen, sondern hardwarenahe programmiert sind. Das Mischen von Richtlinien- und Arduino-Funktionen wird meistens trotzdem funktionieren, kann aber nicht in jedem Fall garantiert werden.
 
 2022.02.24@Rah

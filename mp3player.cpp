@@ -3,8 +3,8 @@ Programm:           Bibliothek für den DFPlayer Mini
 Beschreibung:       Bibliothek verwendet den seriellen Empfangsinterrupt                    
 
 Autor:              Rahm
-Datum:			         1.03.2019
-letzte Änderung:     1.04.2019
+Datum:			    1.03.2019
+letzte Änderung:    1.04.2019
 */
 
 #include "mp3player.h"
@@ -190,7 +190,7 @@ uint16_t mp3_getTotalTrackCount(void)
 {
   uint16_t temp;
   
-  mp3_send_command(0x48,0,0,0);       // Query the ttotal number of SD-Card Files
+  mp3_send_command(0x48,0,0,0);       // Query the total number of SD-Card Files
   temp = mp3_waiting_for_reply(0x48);
   return temp;
 }
@@ -199,7 +199,7 @@ uint16_t mp3_getFolderTrackCount(void)
 {
   uint16_t temp;
   
-  mp3_send_command(0x4e,0,0,0);       // Query the ttotal number of SD-Card Files
+  mp3_send_command(0x4e,0,0,0);       // Query the total number of Folder-Files
   temp = mp3_waiting_for_reply(0x4e);
   return temp;
 }
@@ -208,7 +208,7 @@ uint16_t mp3_getTotalFolderCount(void)
 {
   uint16_t temp;
   
-  mp3_send_command(0x4f,0,0,0);       // Query the ttotal number of SD-Card Files
+  mp3_send_command(0x4f,0,0,0);       // Query the total number of SD-Card Files
   temp = mp3_waiting_for_reply(0x4f);
   return temp;
 }

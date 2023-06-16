@@ -1,10 +1,10 @@
 /*
 Programm:
-Beschreibung:       Header-Datei für MP3-Player mit DFPlayer Mini - Modul
+Beschreibung:       Header-Datei fï¿½r MP3-Player mit DFPlayer Mini - Modul
 
 Autor:              Rahm
 Datum:			        23.02.2019
-letzte Änderung:    1.4.19
+letzte ï¿½nderung:    1.4.19
 */
 
 #ifndef _MP3PLAYER_H_
@@ -32,9 +32,9 @@ enum
 
 enum
 {
-  _PLAYBACK_STOP_          = 0,
-  _PLAYBACK_PLAY_,
-  _PLAYBACK_PAUSE_
+  _PLAY_STOP_          = 0,
+  _PLAY_PLAY_,
+  _PLAY_PAUSE_
 } play_mode;
 
 enum EQ_MODE
@@ -69,7 +69,7 @@ uint16_t mp3_getFolderTrackCount(void);
 uint16_t mp3_getTotalFolderCount(void);
 uint16_t mp3_getCurrentTrack(void);
 
-// Lautstärke, EQ
+// Lautstï¿½rke, EQ
 void     mp3_setVolume(uint8_t volume);
 uint8_t  mp3_getVolume(void);
 void     mp3_increaseVolume(void);

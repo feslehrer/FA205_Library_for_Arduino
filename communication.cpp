@@ -281,7 +281,7 @@ uint8_t rs232_binary_get ( void )
 
 uint8_t rs232_readbytes(uint8_t *buf, int8_t _length)
 {
-   uint16_t timeout;
+   uint16_t timeout = 0;
    uint8_t  i = 0;
 
    //Puffer löschen

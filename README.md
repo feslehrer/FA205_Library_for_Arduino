@@ -7,6 +7,7 @@ Vorsicht: Da die Funktionen nativ programmiert sind und nicht auf Arduino-Biblio
 Die Bibliotheken können direkt mit dem Arduino-Carrier-Board (AS-Elektronik) zusammen verwendet werden. Das Carrier-Board kann mit Arduino-Nano, Arduino-Uno, Atmega328Pxplained-mini und kompatiblen Controller-Modulen bestückt werden:
 
 ![image](https://github.com/feslehrer/FA205_Library_for_Arduino/assets/24614659/97ba22d6-7ddc-4444-a178-783176a95a53)
+www.ase-schlierbach.de
 
 <br>Zur Installation der Bibliotheken gehen Sie wie folgt vor:
 

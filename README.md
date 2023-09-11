@@ -1,4 +1,4 @@
-# FA205 Bibliothek für Arduino Uno und Nano
+# FA205 Bibliothek für Arduino Uno und Nano mit ATmega328P-Controller
 Implementierung der Technischen Richtlinie FA205.
 Bibliotheken für die C-Programmierung für Unterricht und Prüfung im Beruf Elektroniker für Geräte und Systeme in Baden-Württemberg.
 

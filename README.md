@@ -1,5 +1,10 @@
 # FA205 Bibliothek für Arduino Uno und Nano mit ATmega328P-Controller
-Implementierung der Technischen Richtlinie FA205.
+### Sonstige FA205-Impementierungen
+Implementierungen sind auch für folgende Plattformen verfügbar: 
++ ArduinoUno/Nano mit ATmega328P und ArduinoIDE: https://github.com/feslehrer/FA205_Library_for_Arduino.git
++ ESP32 mit ESP32-Carrier-Board: https://github.com/feslehrer/FA205-ESP32.git
+
+### Implementierung der Technischen Richtlinie FA205 für Arduino.
 Bibliotheken für die C-Programmierung für Unterricht und Prüfung im Beruf **Elektroniker für Geräte und Systeme in Baden-Württemberg**.
 
 Diese Bibliotheken sind fast identische Umsetzungen zu meinen FA205-Bibliotheken für MicrochipStudio und können mit der Arduino-IDE verwendet werden.

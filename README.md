@@ -14,6 +14,15 @@ Die Bibliotheken können direkt mit dem Arduino-Carrier-Board (AS-Elektronik) zu
 ![image](https://github.com/feslehrer/FA205_Library_for_Arduino/assets/24614659/97ba22d6-7ddc-4444-a178-783176a95a53)
 www.ase-schlierbach.de
 
+### FA205-Portbelegungen für Arduino-Carrier-Board
+Die FA205-Funktionen verwenden die abgebildeten Ports- und Pinbelegungen:
+</br><img src="https://github.com/feslehrer/FA205_Library_for_Arduino/assets/24614659/8606e090-30c7-46a4-8300-e92b3141cdce" alt="ESP32-Carrier-Board" width="500">
+
+## Installation
++ Auf GitHub Resource: https://github.com/feslehrer/FA205-ESP32.git
+<br>Download der Bibliothek als Zip-Datei (<>Code --> Download Zip)
++ In der Arduino-IDE auf **Sketch --> Bibliothek einbinden --> .Zip-Bibliothek hinzufügen...**
++ Im Sketch muss **controller.h** inkludiert werden.
 <br>Zur Installation der Bibliotheken gehen Sie wie folgt vor:
 
 <br>1. Download der Zip-Bibliothek von GitHub: https://github.com/feslehrer/FA205_Library_for_Arduino

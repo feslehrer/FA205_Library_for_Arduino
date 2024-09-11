@@ -19,7 +19,7 @@ Die FA205-Funktionen verwenden die abgebildeten Ports- und Pinbelegungen:
 </br><img src="https://github.com/feslehrer/FA205_Library_for_Arduino/assets/24614659/8606e090-30c7-46a4-8300-e92b3141cdce" alt="ESP32-Carrier-Board" width="500">
 
 ## Installation
-+ Auf GitHub Resource: https://github.com/feslehrer/FA205-ESP32.git
++ Auf GitHub Resource: https://github.com/feslehrer/FA205_Library_for_Arduino.git
 <br>Download der Bibliothek als Zip-Datei (<>Code --> Download Zip)
 + In der Arduino-IDE auf **Sketch --> Bibliothek einbinden --> .Zip-Bibliothek hinzufügen...**
 + Im Sketch muss **controller.h** inkludiert werden.

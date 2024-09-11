@@ -32,7 +32,7 @@ Die FA205-Funktionen verwenden die abgebildeten Ports- und Pinbelegungen:
 
 ![image](https://github.com/feslehrer/FA205_Library_for_Arduino/assets/24614659/37570d5f-6274-4827-9876-a8dd5b0b5df8)
 
-<br>3. Im libraries-Prdner erscheint die Lib nun als „FA205_Library_for_Arduino-main“:  
+<br>3. Im libraries-Ordner erscheint die Lib nun als „FA205_Library_for_Arduino-main“:  
 
 ![image](https://github.com/feslehrer/FA205_Library_for_Arduino/assets/24614659/8453072d-3d2e-408e-948c-e26ca7c508c7)
 

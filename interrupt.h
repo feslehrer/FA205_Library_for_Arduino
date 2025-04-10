@@ -3,7 +3,7 @@
 // Controller:       atmel ATMega8 / ATMega328
 // Version:          2.0
 // erstellt am:      13.07.2015
-// letzte Änderung:  16.08.2018
+// letzte Ã„nderung:  16.08.2018
 // Autor:            Rahm
 
 #ifndef _INTERRUPT_H_
@@ -17,25 +17,25 @@
 #define _FALLING_EDGE_TRIGGER_
 //#define _ANY_EDGE_TRIGGER_
 
-// Funktionsprototypen für externen Interrupt0
+// Funktionsprototypen fÃ¼r externen Interrupt0
 extern void ext_interrupt_init    ( void (*ip) (void));
 extern void ext_interrupt_enable  ( void );
 extern void ext_interrupt_disable ( void );
 extern void ext_interrupt_isr     ( void );
 
-// Funktionsprototypen für externen Interrupt1
+// Funktionsprototypen fÃ¼r externen Interrupt1
 extern void ext_interrupt1_init    ( void (*ip) (void));
 extern void ext_interrupt1_enable  ( void );
 extern void ext_interrupt1_disable ( void );
 extern void ext_interrupt1_isr     ( void );
 
-// Funktionsprototypen für seriellen Interrupt (data received)
+// Funktionsprototypen fÃ¼r seriellen Interrupt (data received)
 extern void serial_interrupt_init    ( void (*sr) (void));
 extern void serial_interrupt_enable  ( void );
 extern void serial_interrupt_disable ( void );
 extern void serial_interrupt_isr     ( void );
 
-// Funktionsprototypen für timer1ms
+// Funktionsprototypen fÃ¼r timer1ms
 extern void timer1ms_init         ( void (*ti) (void) );
 extern void timer1ms_enable       ( void );
 extern void timer1ms_disable      ( void );
@@ -44,8 +44,8 @@ extern void timer1ms_isr          ( void );
 #ifdef _ATMEGA328_
 // Erweiterter Timer mit variabler Zeit: millisekunden = (16.2 ... 0.0001) ms
 // Kein Bestandteil der Technischen Richtlinie FA205 !!!
-// Die Funktionen werden für timer1ms benötigt. Sind aber nur beim 
-// ATmega328 verfügbar. Die Genauigkeit hängt vom gewählten Zeitwert ab!
+// Die Funktionen werden fÃ¼r timer1ms benÃ¶tigt. Sind aber nur beim 
+// ATmega328 verfÃ¼gbar. Die Genauigkeit hÃ¤ngt vom gewÃ¤hlten Zeitwert ab!
  extern void timer_ms_init         ( void (*ti) (void), float millisec );
  extern void timer_ms_enable       ( void );
  extern void timer_ms_disable      ( void );
@@ -57,7 +57,7 @@ extern void timer1ms_isr          ( void );
 //                         bis    88 = a''''' = 4186,01Hz
 // duration:  Tondauer in ms
 // silence:   Ruhe nach Ton in ms
-// Änderung des Soundports hier möglich:
+// Ã„nderung des Soundports hier mÃ¶glich:
  #define TON_PORT _PORTB_
  #define TON_BIT  3
  extern void sound_init(void);

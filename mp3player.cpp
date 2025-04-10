@@ -1,10 +1,10 @@
 /*
-Programm:           Bibliothek für den DFPlayer Mini
+Programm:           Bibliothek fï¿½r den DFPlayer Mini
 Beschreibung:       Bibliothek verwendet den seriellen Empfangsinterrupt                    
 
 Autor:              Rahm
 Datum:			    1.03.2019
-letzte Änderung:    1.04.2019
+letzte ï¿½nderung:    1.04.2019
 */
 
 #include "mp3player.h"
@@ -263,22 +263,22 @@ void mp3_send_command(uint8_t command, uint8_t feedback, uint8_t p_msb, uint8_t 
 
 uint8_t mp3_receive_query( uint8_t *command, uint16_t *argument)
 {
-  volatile uint8_t buffer[10];         // Puffer für Rückgabestring vom Player
+  volatile uint8_t buffer[10];         // Puffer fï¿½r Rï¿½ckgabestring vom Player
   volatile uint16_t timeout = 0;
   volatile int16_t checksum;
   volatile uint8_t len=0;
   volatile uint16_t temp;
 
-  *command = 0; *argument = 0;        // Rückgabewerte initialisieren
+  *command = 0; *argument = 0;        // RÃ¼ckgabewerte initialisieren
 
   do
   {
-    len = rs232_readbytes(&buffer[0],1);    // Startbyte (0x7E) lesen
+    len = rs232_readbytes((uint8_t*)&buffer[0],1);    // Startbyte (0x7E) lesen
     if (len != 1) return 0;    // Fehler
   }  while ( buffer[0] != 0x7E);           // Startbyte lesen
   
   len += rs232_readbytes(&buffer[1],9);    // restliche 9 Bytes lesen
-  // Test auf ungültige Daten
+  // Test auf ungÃ¼ltige Daten
   if (len < 10)  return 0;
   if (buffer[1] != 0xFF || buffer[2] != 0x06 || buffer[9] != 0xef )   return 0;
   

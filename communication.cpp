@@ -4,7 +4,7 @@
 //     I2C und RS232 Routinen
 // Version:          1.0
 // erstellt am:      5.5.2015
-// letzte Änderung:  17.3.2018
+// letzte ï¿½nderung:  17.3.2018
 // Autor:            Rahm
 
 #include "communication.h"
@@ -72,7 +72,7 @@ void i2c_stop (void)
 }
 
 //*****************************************************************************************
-// * Byte ausgeben an I2C-Bus , Rückgabewert = ack = ACK/NACK
+// * Byte ausgeben an I2C-Bus , Rï¿½ckgabewert = ack = ACK/NACK
 // ****************************************************************************************
 uint8_t i2c_write (uint8_t byte)
 {
@@ -164,7 +164,7 @@ void rs232_init(void)
   //#endif
 }
 
-void rs232_baud ( uint32_t baud )     // Ändert die Baudrate
+void rs232_baud ( uint32_t baud )     // ï¿½ndert die Baudrate
 {
     #define UART_UBRR_CALC(BAUD_,FREQ_) ((FREQ_)/((BAUD_)*16L)-1)
     #ifdef _ATMEGA8_
@@ -187,12 +187,12 @@ void rs232_baud ( uint32_t baud )     // Ändert die Baudrate
 uint8_t rs232_get ( void )
 {
   #ifdef _ATMEGA8_
-   if (!(UCSRA & (1<<RXC))) return ('\0');    // Wenn kein Zeichen im Puffer, dann 0 zurückgeben!
-   return UDR;                                // Zeichen zurückliefern
+   if (!(UCSRA & (1<<RXC))) return ('\0');    // Wenn kein Zeichen im Puffer, dann 0 zurï¿½ckgeben!
+   return UDR;                                // Zeichen zurï¿½ckliefern
   #endif
   #ifdef _ATMEGA328_
-   if (!(UCSR0A & (1<<RXC0))) return ('\0');    // Wenn kein Zeichen im Puffer, dann 0 zurückgeben!
-   return UDR0;                                // Zeichen zurückliefern
+   if (!(UCSR0A & (1<<RXC0))) return ('\0');    // Wenn kein Zeichen im Puffer, dann 0 zurï¿½ckgeben!
+   return UDR0;                                // Zeichen zurï¿½ckliefern
   #endif
 }
 
@@ -208,10 +208,17 @@ void rs232_put ( uint8_t value )
   #endif
 }
 
-void rs232_print ( uint8_t *text )
+// Doppelte Definition notwendig, sonst Fehlermeldung "unerlaubte Typumwandlung"
+void rs232_print(const char* text) 
 {
   while (*text != '\0')
   rs232_put(*text++);
+}
+
+void rs232_print(uint8_t* text) 
+{
+  const char* temp_str = (const char*)text;
+  rs232_print(temp_str);
 }
 
 // RS232-Erweiterungen sind nicht Teil der Technischen Richtlinie FA205!!
@@ -260,7 +267,7 @@ void rs232_int(uint16_t val)
     buffer[n++] = val%10 + '0';
   } while ((val /= 10) > 0);
   
-  while (n<5)                   // Rest von buffer mit blank füllen
+  while (n<5)                   // Rest von buffer mit blank fï¿½llen
   {
     buffer[n++] = ' ';
   }
@@ -276,7 +283,7 @@ uint8_t rs232_binary_get ( void )
 {
    while (!rs232_is_received());    // warten, bis Byte im Puffer!
 
-   return UDR0;                     // wert zurückgeben
+   return UDR0;                     // wert zurï¿½ckgeben
 }
 
 uint8_t rs232_readbytes(uint8_t *buf, int8_t _length)
@@ -284,7 +291,7 @@ uint8_t rs232_readbytes(uint8_t *buf, int8_t _length)
    uint16_t timeout = 0;
    uint8_t  i = 0;
 
-   //Puffer löschen
+   //Puffer lï¿½schen
    for (uint8_t n=0; n<=_length;n++)  buf[n] = 0;
 
    while(_length > 0)

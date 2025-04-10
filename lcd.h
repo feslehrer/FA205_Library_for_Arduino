@@ -3,7 +3,7 @@
 // Controller:       atmel ATmega8/ATmega328
 // Version:          1.0
 // erstellt am:      30.9.2015
-// letzte Änderung:  9.4.2018
+// letzte ï¿½nderung:  9.4.2018
 // Autor:            Rahm
 
 #ifndef _LCD_H_
@@ -12,23 +12,26 @@
 #include "controller.h"
 
 //**** Schalter ********************************************************
-#define LCD_LEN 16              // Display-Zeilenlänge 20 oder 16 (default)
+#define LCD_LEN 16              // Display-Zeilenlï¿½nge 20 oder 16 (default)
 #define LCD_I2C                 // Aktiviert das I2C-Interface
-#define LCD_WAIT 10              // Bei Timing-Problemen LCD_WAIT vergrößern!!
+#define LCD_WAIT 10              // Bei Timing-Problemen LCD_WAIT vergrï¿½ï¿½ern!!
 //**********************************************************************
 
 //Anzeige Einstellungen
 #define CURSOR      0x0c        // 0b00001100  ->  Display on, Cursor off, Blink off
+
+#ifndef DISPLAY
 #define DISPLAY     0x14        // 0b00010100  ->  Cursor shift right
-										
-#define ZEILE1      0x00        // Startadresse für erste Displayzeile
+#endif
+
+#define ZEILE1      0x00        // Startadresse fï¿½r erste Displayzeile
 #define ZEILE2      0x40
 
 #if (LCD_LEN == 16)
- #define ZEILE3     0x10        // Für 16 Zeichen LCDs Zeile3 = 0x10
+ #define ZEILE3     0x10        // Fï¿½r 16 Zeichen LCDs Zeile3 = 0x10
  #define ZEILE4     0x50        // "       "       "   Zeile4 = 0x50
 #elif (LCD_LEN == 20) 
- #define ZEILE3     0x14        // Für 20 Zeichen LCDs Zeile3 = 0x14
+ #define ZEILE3     0x14        // Fï¿½r 20 Zeichen LCDs Zeile3 = 0x14
  #define ZEILE4     0x54        // "       "       "   Zeile4 = 0x54
 #endif
 
@@ -41,7 +44,7 @@
  #define LCD_PORT        PORTD   // LCD-Display an PortD im -4-Bit-Modus
  #define LCD_PORT_CFG    DDRD
  #define LCD_PORT_MASK   0xf0    // Maskiert die 4 Datenbit (4 Bit-Modus)
-                                 // Mögliche Werte: f0, 78, 3c, 1e, 0f
+                                 // Mï¿½gliche Werte: f0, 78, 3c, 1e, 0f
  #define LCD_PORT_EN     PORTB   // LCD-Display EN an PortB.0
  #define LCD_PORT_EN_CFG DDRB
  #define EN       0
@@ -60,17 +63,17 @@
   #define LCD_PORT_BUSY   PIND    // Busy-Flag wird von Bit D7 gelesen!
  #endif
 
-#else   // Für I2C-Display mit PCF8574T (D7..D4 => P7..P4)!!!
+#else   // Fï¿½r I2C-Display mit PCF8574T (D7..D4 => P7..P4)!!!
  #define RS       0
  #define RW       1
  #define EN       2
  #define BL       3   //Backlight
- //***** I2C-Adressen und Kontrollbyte für den PCF8574 ****************
+ //***** I2C-Adressen und Kontrollbyte fï¿½r den PCF8574 ****************
  #define LCD_ADDR_R  0x4f   // 01001111 ->  0100 fest, 111 durch Jumper, 1 Wert lesen
  #define LCD_ADDR_W  0x4e   // 01001110 ->  0100 fest, 111 durch Jumper, 0 Wert schreiben
 #endif
 
-//Funktionsdefinitionen für Technische Richtlinie FA205
+//Funktionsdefinitionen fï¿½r Technische Richtlinie FA205
 extern void lcd_init      ( void );                            // Initialisierung des Displays
 extern void lcd_clear     ( void );
 extern void lcd_setcursor ( uint8_t row, uint8_t column );     // Setzen der Cursorposition
@@ -86,7 +89,7 @@ extern void lcd_defchar   ( uint8_t *pixtab, uint8_t char_nr );
 // Definition von 7 eigenen Zeichen. char_nr: 1 bis 7
 // char_nr = 0 funktioniert nur, wenn das Zeichen nicht in Zeichenketten ('\0' = 0) verwendet wird.
 extern void lcd_clearline ( uint8_t lineNr );
-// Ausgabe von 00..99  z.B. für Datum, Uhrzeit
+// Ausgabe von 00..99  z.B. fï¿½r Datum, Uhrzeit
 extern void lcd_dd        (uint8_t val);
 // Zeigt 0000 bis FFFF auf dem Display an!
 extern void lcd_hhhh      (uint16_t val);

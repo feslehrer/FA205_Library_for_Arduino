@@ -3,7 +3,7 @@
 // Controller:       atmel ATMega8/ATMega328
 // Version:          1.0
 // erstellt am:      30.9.2015
-// letzte Änderung:  17.3.2018
+// letzte ï¿½nderung:  17.3.2018
 // Autor:            Rahm
 
 #ifndef _CONTROLLER_H_
@@ -29,7 +29,7 @@
 
 // F_CPU beeinflusst timer1ms, delay, rs232, pwm
 //#define F_CPU 3686400UL     // z.B. myAVR
-#define F_CPU 16000000UL	// z.B. Arduino UNO
+//#define F_CPU 16000000UL	// z.B. Arduino UNO
 
 #define __DELAY_BACKWARD_COMPATIBLE__
 

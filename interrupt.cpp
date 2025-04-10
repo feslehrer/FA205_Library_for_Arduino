@@ -4,32 +4,19 @@
 //     Verwendet externen Interrupt 0 und Timer 0
 // Version:          2.0
 // erstellt am:      13.07.2015
-// letzte �nderung:  16.8.2018
+// letzte Änderung:  11.4.2025
 // Autor:            Rahm
 
 #include "interrupt.h"
-#include "math.h"
+//#include "math.h"
 
-#ifdef _ATMEGA8_
- #define _INT_CONFIG_     MCUCR
- #define _INT_ENABLE_     GICR
- #define _TIMER_RUN_      TCCR0
- #define _TIMER_ENABLE_   TIMSK
- #define _TIMER_INT_FLAG_ TOIE0
- #define _TIMER_CNT_      TCNT0
-#endif
-#ifdef _ATMEGA328_
- #define _INT_CONFIG_     EICRA
- #define _INT_ENABLE_     EIMSK
- #define _TIMER_RUN_      TCCR0B
- #define _TIMER_ENABLE_   TIMSK0
- #define _TIMER_INT_FLAG_ OCIE0A
- #define _TIMER_CNT_      TCNT0
- // Lokale initialisierungsroutine
- uint8_t preload_calc    ( float time);
+#define _INT_CONFIG_     EICRA
+#define _INT_ENABLE_     EIMSK
 
- static uint16_t prescaler;
-#endif
+// Lokale initialisierungsroutine
+uint8_t preload_calc    ( float time);
+
+static uint16_t prescaler;
 
 // Pointer auf Interrupt-Service-Routinen
 void (*my_interrupt0) (void);
@@ -113,33 +100,15 @@ void ext_interrupt1_disable( void )
 //*******************************************************************
 //** ab hier timer-Funktionen
 //*******************************************************************
-// Preload = 256 - 1 ms * 3686,4 kHz / 64
 
 void timer1ms_init ( void (*ti) (void))
 {
-  #ifdef _ATMEGA8_
-   my_timer = ti;					// Pointer auf isr im User-Code (normalerweise: timer1ms_isr) !!
-   #define PRELOAD (256 - (0.001*F_CPU / 64))		// Preloadwert
-   _TIMER_CNT_ = PRELOAD;
-  #endif
-  
-  #ifdef _ATMEGA328_
     timer_ms_init(ti,1.0);
-  #endif
 }
 
 void timer1ms_enable( void )
 {  
-  #ifdef _ATMEGA8_
-   _TIMER_CNT_ = PRELOAD;
-   _TIMER_RUN_    |= (1<<CS01) | (1 << CS00);   // Timer starten mit Vorteiler 64
-   _TIMER_ENABLE_ |= (1 << _TIMER_INT_FLAG_);   // Timer Interrupt aktivieren
-   sei();                                       // Globale Interruptfreigabe
-  #endif
-
-  #ifdef _ATMEGA328_
-    timer_ms_enable();
-  #endif
+  timer_ms_enable();
 }
 
 void timer1ms_disable( void )
@@ -150,36 +119,35 @@ void timer1ms_disable( void )
 // Die timer-Interrupt-Serviceroutine timer1ms_isr() muss
 // selbst geschrieben werden!!
 
-ISR(TIMER0_COMPA_vect)        // Timer0-Interrupt im Autoreload-mode (CTC)
-{
-  _TIMER_ENABLE_ &= ~(1<<_TIMER_INT_FLAG_); // Timer Interrupt sperren
+ISR(TIMER1_COMPA_vect)        // Timer1-Interrupt im Autoreload-mode (CTC)
+{ 
+  TIMSK1 &= ~(1 << OCIE1A);      // Timer Interrupt sperren
   my_timer();                    // aufrufen der Interrupt-Serviceroutine
-  _TIMER_ENABLE_ |= (1<<_TIMER_INT_FLAG_);  // Timer Interrupt aktivieren
+  TIMSK1 |=  (1 << OCIE1A);      // Timer Interrupt aktivieren
 }
-
-//ISR(TIMER0_OVF_vect)        // Timer0-Interrupt im Normal-mode
-//{
-  //_TIMER_CNT_ = PRELOAD;         // Preloadwert
-  //_TIMER_ENABLE_ &= ~(1<<_TIMER_INT_FLAG_); // Timer Interrupt sperren
-  //my_timer();                    // aufrufen der Interrupt-Serviceroutine
-  //_TIMER_ENABLE_ |= (1<<_TIMER_INT_FLAG_);  // Timer Interrupt aktivieren
-//}
-
-#ifdef _ATMEGA328_
 
 void timer_ms_init ( void (*ti) (void), float time)
 {
-  my_timer = ti;					         // Pointer auf isr im User-Code (normalerweise: timer_ms_isr) !!
-   
-  TCCR0A |= (1 << WGM01);          // Timer Mode: CTC   (Autoreload-Modus)
-  OCR0A = preload_calc(time);      // Bei welchem Z�hlwert soll der Interrupt kommen
+  cli();                    // Interrupts deaktivieren
+
+  my_timer = ti;					  // Pointer auf isr im User-Code (normalerweise: timer_ms_isr) !!
+ 
+  TCCR1A = 0;               // Timer1 Control Register A auf 0 setzen
+  TCCR1B = 0;               // Timer1 Control Register B auf 0 setzen
+  TCNT1  = 0;               // Timer1 Counter auf 0 setzen
+
+  OCR1A = preload_calc(time);   //  (F_CPU / 1000) - 1;  //1ms
+  TCCR1B |= (1 << WGM12);     // CTC-Modus aktivieren
+  //TCCR1B |= (1 << CS10);    // Keine Prescaler (16MHz)
+
+  //sei();             // Interrupts aktivieren (!!erst mit timer_ms_enable())
 }
 
 uint8_t preload_calc ( float time)
 { // time in ms
   uint8_t preload;
   
-  if      (time < 0.015937) prescaler = 1;         // tmax = 15,937�s
+  if      (time < 0.015937) prescaler = 1;         // tmax = 15,937µs
   else if (time < 0.1275  ) prescaler = 8;
   else if (time < 1.02    ) prescaler = 64;
   else if (time < 4.08    ) prescaler = 256;
@@ -194,24 +162,27 @@ void timer_ms_enable( void )
 {
   switch (prescaler)
   {
-    case 1:     _TIMER_RUN_    |= (1 << CS00); break;               // Timer starten mit Vorteiler 1
-    case 8:     _TIMER_RUN_    |= (1 << CS01); break;               // Timer starten mit Vorteiler 8
-    case 64:    _TIMER_RUN_    |= (1 << CS01) | (1 << CS00); break; // Timer starten mit Vorteiler 64
-    case 256:   _TIMER_RUN_    |= (1 << CS02); break;               // Timer starten mit Vorteiler 256
-    case 1024:  _TIMER_RUN_    |= (1 << CS02) | (1 << CS00); break; // Timer starten mit Vorteiler 1024    
+    case 1:     TCCR1B    |= (1 << CS10); break;               // Timer starten mit Vorteiler 1
+    case 8:     TCCR1B    |= (1 << CS11); break;               // Timer starten mit Vorteiler 8
+    case 64:    TCCR1B    |= (1 << CS11) | (1 << CS10); break; // Timer starten mit Vorteiler 64
+    case 256:   TCCR1B    |= (1 << CS12); break;               // Timer starten mit Vorteiler 256
+    case 1024:  TCCR1B    |= (1 << CS12) | (1 << CS10); break; // Timer starten mit Vorteiler 1024    
   }
-  _TIMER_ENABLE_ |= (1 << _TIMER_INT_FLAG_);   // Timer Interrupt aktivieren
+
+  TIMSK1 |= (1 << OCIE1A);      // Timer Compare Interrupt aktivieren
+  TCCR1B |= (1 << WGM12);       // CTC-Modus aktivieren
+  //TCCR1B |= (1 << CS10);        // Keine Prescaler (16MHz)
   sei();                                       // Globale Interruptfreigabe
 }
 
 void timer_ms_disable( void )
 {
-  _TIMER_RUN_ = 0x00;						// Timer stoppen
-  _TIMER_ENABLE_ &= ~(1<<_TIMER_INT_FLAG_);  // Timer Interrupt sperren
+  TCCR1B &= ~((1 << CS12) | (1 << CS11) | (1 << CS10));  //Timer stoppen
+  TIMSK1 &= ~(1 << OCIE1A);       // Compare Match A Interrupt für Timer1 
   //cli();                                     // Globale Interruptsperre
 }
 
-#endif
+//*********** Data Receive Interrupt *******************************
 
 void serial_interrupt_init( void (*sr) (void))
 { 

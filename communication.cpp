@@ -147,7 +147,7 @@ void rs232_baud(uint32_t baud)
 
   UCSR0B |= (1<<TXEN0) | (1<<RXEN0);    // UART TX und RX einschalten
   UCSR0C |= (1<<USBS0) | (3<<UCSZ00);   // Asynchron 8N1
-  }
+}
   
 
 uint8_t rs232_get ( void )

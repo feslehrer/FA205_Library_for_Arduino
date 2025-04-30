@@ -3,7 +3,7 @@ Revision-History
 **************************
 
 2025.04.13:<br>
-+ Bugfixes in rs232_setbaud(). Funktioniert jetzt für die gängigen Baudraten und lässt ein Ändern während der Programmlaufzeit zu.
++ Bugfixes in rs232_baud(). Funktioniert jetzt für die gängigen Baudraten und lässt ein Ändern während der Programmlaufzeit zu.
 + Support für ATmega8 wurde entfernt.
 
 2025.04.11:<br>

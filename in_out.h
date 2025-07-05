@@ -20,12 +20,15 @@
 #define OUT 1
 // Portregisterdefinitionen. Können an dieser Stelle angepasst werden. 
 #ifdef _ATtiny104_
-#define _PORTA_      &PORTA			// Vorsicht! PD0 = RxD (Input) PD1 = TxD (Output) müssen beim Programmieren floaten
+ #define _PORTA_      &PORTA			// Vorsicht! PD0 = RxD (Input) PD1 = TxD (Output) müssen beim Programmieren floaten
+ #define PORTx       _PORTA_
 #endif
 #ifdef _ATMEGA328_
  #define _PORTD_     &PORTD			// Vorsicht! PD0 = RxD (Input) PD1 = TxD (Output) müssen beim Programmieren floaten
+ #define PORTx       _PORTD_
 #endif
 #define _PORTB_      &PORTB			// Arduino-Pins: 8 ... 13
+#define PORTy        _PORTB_
 #define _PORTC_      &PORTC			// PC6 => Arduino Reset-Pin
 
 // ... für PWM
